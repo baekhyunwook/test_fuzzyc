@@ -1,0 +1,117 @@
+# Bazel build rules for Fuzzyc.
+load("@fuzzyc_deps//:requirements.bzl", "requirement")
+
+genrule(
+    name = "fuzzyc_cc_module_sources",
+    srcs = [
+        "Common.g4",
+        "Module.g4",
+        "ModuleLex.g4",
+        "Action.g4",
+    ],
+    outs = [
+        "ModuleParser.cpp",
+        "ModuleParser.h",
+        "ModuleLexer.cpp",
+        "ModuleLexer.h",
+        "ModuleListener.h",
+        "ModuleListener.cpp",
+        "ModuleBaseListener.cpp",
+        "ModuleBaseListener.h",
+    ],
+    cmd = "$(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(@D) -Dlanguage=Cpp -package fuzzyc_cc_module $(SRCS)",
+    tools = [
+        requirement("antlr4-tools"),
+        "@fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4",
+    ],
+)
+
+genrule(
+    name = "fuzzyc_cc_function_sources",
+    srcs = [
+        "Common.g4",
+        "Function.g4",
+        "ModuleLex.g4",
+        "Action.g4",
+    ],
+    outs = [
+        "FunctionParser.cpp",
+        "FunctionParser.h",
+        "FunctionLexer.cpp",
+        "FunctionLexer.h",
+        "FunctionListener.h",
+        "FunctionListener.cpp",
+        "FunctionBaseListener.cpp",
+        "FunctionBaseListener.h",
+    ],
+    cmd = "$(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(@D) -Dlanguage=Cpp -package fuzzyc_cc_function $(SRCS)",
+    tools = [
+        requirement("antlr4-tools"),
+        "@fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4",
+    ],
+)
+
+cc_library(
+    name = "fuzzyc_cc_module",
+    srcs = [
+        "ModuleBaseListener.cpp",
+        "ModuleLexer.cpp",
+        "ModuleListener.cpp",
+        "ModuleParser.cpp",
+    ],
+    hdrs = [
+        "ModuleBaseListener.h",
+        "ModuleLexer.h",
+        "ModuleListener.h",
+        "ModuleParser.h",
+    ],
+    copts = [
+        "-fexceptions",
+        "-Wno-nonnull",
+        "-std=c++17",
+    ],
+    linkstatic = 1,
+    deps = [
+        ":fuzzyc_cc_module_sources",
+        "@antlr4_runtimes//:cpp",
+    ],
+)
+
+cc_library(
+    name = "fuzzyc_cc_function",
+    srcs = [
+        "FunctionBaseListener.cpp",
+        "FunctionLexer.cpp",
+        "FunctionListener.cpp",
+        "FunctionParser.cpp",
+    ],
+    hdrs = [
+        "FunctionBaseListener.h",
+        "FunctionLexer.h",
+        "FunctionListener.h",
+        "FunctionParser.h",
+    ],
+    copts = [
+        "-fexceptions",
+        "-Wno-nonnull",
+    ],
+    linkstatic = 1,
+    deps = [
+        ":fuzzyc_cc_function_sources",
+        "@antlr4_runtimes//:cpp",
+    ],
+)
+
+cc_test(
+    name = "fuzzyc_cc_test",
+    srcs = ["tests/fuzzyc_cc_test.cc"],
+    data = ["tests/testdata"],
+    deps = [
+        ":fuzzyc_cc_function",
+        ":fuzzyc_cc_module",
+        "@antlr4_runtimes//:cpp",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
