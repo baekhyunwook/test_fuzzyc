@@ -1,6 +1,10 @@
 # Bazel build rules for Fuzzyc.
 load("@fuzzyc_deps//:requirements.bzl", "requirement")
 
+package(default_visibility = [
+    "//visibility:public",
+])
+
 genrule(
     name = "fuzzyc_cc_module_sources",
     srcs = [
