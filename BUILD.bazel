@@ -23,7 +23,7 @@ genrule(
         "ModuleBaseListener.cpp",
         "ModuleBaseListener.h",
     ],
-    cmd = "echo HI!; echo $(RULEDIR); echo $(@D); ls -al $(RULEDIR); ls -al $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4); $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_module $(SRCS) -long-messages); ls -al $(RULEDIR)",
+    cmd = "echo HI!; echo $(RULEDIR); echo $(@D); ls -al $(RULEDIR); ls -al $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4); $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_module $(SRCS) -long-messages; ls -al $(RULEDIR)",
     tools = [
         requirement("antlr4-tools"),
         "@fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4",
@@ -48,7 +48,7 @@ genrule(
         "FunctionBaseListener.cpp",
         "FunctionBaseListener.h",
     ],
-    cmd = "echo HI!; echo $(RULEDIR); echo $(@D)); ls -al $(RULEDIR); ls -al $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4); $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_function $(SRCS) -long-messages); ls -al $(RULEDIR)",
+    cmd = "echo HI!; echo $(RULEDIR); echo $(@D)); ls -al $(RULEDIR); ls -al $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4); $(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o $(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_function $(SRCS) -long-messages; ls -al $(RULEDIR)",
     tools = [
         requirement("antlr4-tools"),
         "@fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4",
