@@ -22,7 +22,7 @@ genrule(
     cmd = " ".join([
       "$(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o",
       "$(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_module $(SRCS);",
-      "find $(RULEDIR) \\( -name *.cpp -o -name *.h \\) -exec cp {} $(RULEDIR) \\;",
+      "find $(RULEDIR) \\( -name *.cpp -o -name *.h \\) -exec cp -n {} $(RULEDIR) \\;",
     ]),
     tools = [
         requirement("antlr4-tools"),
@@ -51,7 +51,7 @@ genrule(
     cmd = " ".join([
       "$(locations @fuzzyc_deps_antlr4_tools//:rules_python_wheel_entry_point_antlr4) -o",
       "$(RULEDIR) -Dlanguage=Cpp -package fuzzyc_cc_function $(SRCS);",
-      "find $(RULEDIR) \\( -name *.cpp -o -name *.h \\) -exec cp {} $(RULEDIR) \\;",
+      "find $(RULEDIR) \\( -name *.cpp -o -name *.h \\) -exec cp -n {} $(RULEDIR) \\;",
     ]),
     tools = [
         requirement("antlr4-tools"),
